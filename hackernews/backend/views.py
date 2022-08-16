@@ -6,6 +6,7 @@ from django.contrib.auth import login , authenticate , logout
 from .forms import LinkForm , UserForm
 from django.contrib.auth.models import User
 from django.contrib import messages
+from .models import Links
 # Create your views here.
 def login_custom(request):
     form = 'login'
@@ -53,6 +54,20 @@ def changepassword_custom(request):
             return redirect('login')
     return render(request , 'changepassword.html' , context={"form" : form})
 
+def list_link(request):
+    links = Links.objects.all()
+    return render(request , 'listlinks.html' , context={'links' : links})
+
+def update_list(request , slug):
+    instance = Links.objects.get(slug=slug)
+    form = LinkForm(instance=instance)
+    if request.method == "POST":
+        form = LinkForm(request.POST , instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('list')
+    return render(request , 'updatelink.html' , context={"form":form})
+    
 def create_link(request):
     form = LinkForm
     if request.method == "POST":

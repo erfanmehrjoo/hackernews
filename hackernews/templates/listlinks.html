@@ -1,0 +1,5 @@
+{% for link in links %}
+    {{ link.title}}
+    {{ link.url}}
+    {{ link.created | timesince}}
+{% endfor %}

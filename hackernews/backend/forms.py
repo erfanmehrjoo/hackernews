@@ -6,6 +6,7 @@ class LinkForm(ModelForm):
     class Meta:
         model = Links
         fields = "__all__"
+        exclude = ['slug']
 
 class UserForm(ModelForm):
     class Meta:

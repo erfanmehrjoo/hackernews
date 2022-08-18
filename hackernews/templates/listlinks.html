@@ -1,8 +1,21 @@
+{% extends 'main.html' %}
 {% load static %}
-<h1>{{user}}</h1>
-<img src="{% static user.image.url %}" style="height: 30%;">
-{% for link in links %}
-    {{ link.title}}
-    <a href="{{ link.url}}">website</a>
-    {{ link.created | timesince}}
-{% endfor %}
+{% block content %}
+  {% for link in links %}
+  
+    
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <div class="d-flex text-muted pt-3">
+        <img class="me-3" src="{% static link.userph.image.url %}" alt="" width="48" height="48">
+
+        <p class="pb-3 mb-0 small lh-sm border-bottom">
+          <strong class="d-block text-gray-dark">@{{ user.user }} || {{ link.created | timesince}}</strong>
+          <a href="{{ link.url}}">{{ link.title}}</a>
+          <p>{{ link.dis }}</p>
+        
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+
+{% endblock content %}

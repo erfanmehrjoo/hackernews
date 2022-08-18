@@ -7,6 +7,14 @@ from django.contrib.auth.models import User
 class UserWithPhoto(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images', blank=True)
+    fullname = models.CharField(max_length=100 , blank=True , null=True)
+    email = models.EmailField(max_length=100 , blank=True , null=True)
+    mobile = models.CharField(max_length=100 , blank=True , null=True)
+    address = models.CharField(max_length=100 , blank=True , null=True)
+    city = models.CharField(max_length=100 , blank=True , null=True)
+    state = models.CharField(max_length=100 , blank=True , null=True)
+    country = models.CharField(max_length=100 , blank=True , null=True)
+    job = models.CharField(max_length=100 , blank=True , null=True)
     def __str__(self):
         return self.user.username
 class Links(models.Model):
@@ -15,7 +23,7 @@ class Links(models.Model):
     userph = models.ForeignKey(UserWithPhoto , on_delete=models.CASCADE , blank=True , null=True )
     votes = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE , null=True , blank=True)
-    slug = models.SlugField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True , blank=True , null=True)
     created_date = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

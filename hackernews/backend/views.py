@@ -58,6 +58,8 @@ def changepassword_custom(request):
 def list_link(request):
     user = UserWithPhoto.objects.get(user=request.user)
     links = Links.objects.all()
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    links = links.filter(Q(title__icontains=q))
     return render(request , 'listlinks.html' , context={'links' : links , 'user':user})
 
 def update_list(request , slug):
@@ -105,3 +107,13 @@ def link_room(request , slug):
         form.save()
         return redirect('list')
     return render(request , 'roomlist.html' , context={'whoareyou':whoami,'rooms':room , 'messages':massages})
+
+def userprofile(request , username):
+    user = User.objects.get(username=username)
+    userph = UserWithPhoto.objects.get(user=user)
+    links = Links.objects.filter(user=user)
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    links = links.filter(Q(title__icontains=q))
+    return render(request , 'userprofile.html' , context={'user':user , 'userph':userph , 'links':links})
+
+

@@ -77,3 +77,12 @@ def create_link(request):
             form.save()
             return redirect('admin:index')
     return render(request , "linkscreate.html" , context={"form" : form})
+
+def my_list(request):
+    user = UserWithPhoto.objects.get(user=request.user)
+    links = Links.objects.filter(user=request.user)
+
+    return render(request , 'mylinks.html' , context={'links' : links , 'user':user})
+
+def link_room(request):
+    pass

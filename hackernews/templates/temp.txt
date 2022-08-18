@@ -1,8 +1,0 @@
-{% load static %}
-<h1>{{user}}</h1>
-<img src="{% static user.image.url %}" style="height: 30%;">
-{% for link in links %}
-    {{ link.title}}
-    <a href="{{ link.url}}">website</a>
-    {{ link.created | timesince}}
-{% endfor %}

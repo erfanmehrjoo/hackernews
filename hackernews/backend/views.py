@@ -33,6 +33,8 @@ def logout_custom(request):
     return redirect("login")
 
 def register_custom(request):
+    if request.user.is_authenticated:
+        return redirect('list')
     page = 'Register'
     form = UserCreationForm()
     if request.method == 'POST':
@@ -51,7 +53,7 @@ def register_custom(request):
         else:
             messages.error(request , 'ridi')
     return render(request , 'register.html' , context={'form':form})
-
+@login_required(login_url='login')
 def changepassword_custom(request):
     form = PasswordChangeForm(request.user)
     if request.method == "POST":
@@ -67,17 +69,20 @@ def list_link(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     links = links.filter(Q(title__icontains=q))
     return render(request , 'listlinks.html' , context={'links' : links , 'user':user})
-
+@login_required(login_url='login')
 def update_list(request , slug):
     instance = Links.objects.get(slug=slug)
     form = LinkForm(instance=instance)
+    if instance.user != request.user:
+        return redirect('list')
     if request.method == "POST":
         form = LinkForm(request.POST , instance=instance)
         if form.is_valid():
             form.save()
             return redirect('list')
     return render(request , 'updatelink.html' , context={"form":form})
-    
+
+@login_required(login_url='login')
 def create_link(request):
     form = LinkForm
     if request.method == "POST":
@@ -87,6 +92,7 @@ def create_link(request):
             return redirect('list')
     return render(request , "linkscreate.html" , context={"form" : form})
 
+@login_required(login_url='login')
 def my_list(request):
     user = UserWithPhoto.objects.get(user=request.user)
     links = Links.objects.filter(user=request.user)
@@ -94,6 +100,7 @@ def my_list(request):
     links = links.filter(Q(title__icontains=q))
     return render(request , 'mylinks.html' , context={'links' : links , 'user':user})
 
+@login_required(login_url='login')
 def link_room(request , slug):
     room = Links.objects.get(slug=slug)
     whoami = UserWithPhoto.objects.get(user=request.user)
@@ -113,7 +120,8 @@ def link_room(request , slug):
         form.save()
         return redirect('list')
     return render(request , 'roomlist.html' , context={'whoareyou':whoami,'rooms':room , 'messages':massages})
-
+    
+@login_required(login_url='login')
 def userprofile(request , username):
     user = User.objects.get(username=username)
     userph = UserWithPhoto.objects.get(user=user)

@@ -25,6 +25,7 @@ urlpatterns = [
     path("changepassword/" , changepassword_custom , name='changepassword'),
     path('create/'  , create_link , name='create'), 
     path('list/' , list_link , name='list' ),
+    path('' , list_link , name='list' ),
     path('update/<str:slug>' , update_list , name='update-list' ),
     path('my-list/' , my_list , name='my-list' ),
     path('room/<str:slug>/' , link_room , name='link-room'),

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 class UserWithPhoto(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images', blank=True)
+    image = models.ImageField(upload_to='images', blank=True  , default = 'images/default.png') 
     fullname = models.CharField(max_length=100 , blank=True , null=True)
     email = models.EmailField(max_length=100 , blank=True , null=True)
     mobile = models.CharField(max_length=100 , blank=True , null=True)

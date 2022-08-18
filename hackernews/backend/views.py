@@ -8,11 +8,12 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Links , UserWithPhoto , Message
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def login_custom(request):
     form = 'login'
     if request.user.is_authenticated:
-        return redirect("admin:index")
+        return redirect("list")
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -39,9 +40,14 @@ def register_custom(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
+
             user.save()
+            photo = UserWithPhoto.objects.create(
+                user=user
+            )
+            photo.save()
             login(request , user)
-            return redirect('lsit')
+            return redirect('list')
         else:
             messages.error(request , 'ridi')
     return render(request , 'register.html' , context={'form':form})

@@ -6,7 +6,7 @@ from django.contrib.auth import login , authenticate , logout
 from .forms import LinkForm , UserForm
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Links
+from .models import Links , UserWithPhoto , Message
 # Create your views here.
 def login_custom(request):
     form = 'login'
@@ -55,8 +55,9 @@ def changepassword_custom(request):
     return render(request , 'changepassword.html' , context={"form" : form})
 
 def list_link(request):
+    user = UserWithPhoto.objects.get(user=request.user)
     links = Links.objects.all()
-    return render(request , 'listlinks.html' , context={'links' : links})
+    return render(request , 'listlinks.html' , context={'links' : links , 'user':user})
 
 def update_list(request , slug):
     instance = Links.objects.get(slug=slug)

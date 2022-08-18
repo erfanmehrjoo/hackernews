@@ -13,10 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from cmath import nan
+
 from django.contrib import admin
 from django.urls import path
-from .views import login_custom , logout_custom , register_custom , changepassword_custom , create_link , list_link , update_list , my_list , link_room , userprofile
+from .views import login_custom , logout_custom , register_custom , changepassword_custom , create_link , list_link , update_list , my_list , link_room , userprofile  ,profile_update
 
 urlpatterns = [
     path('login/' , login_custom , name='login'),
@@ -30,4 +30,5 @@ urlpatterns = [
     path('my-list/' , my_list , name='my-list' ),
     path('room/<str:slug>/' , link_room , name='link-room'),
     path('userprofile/<str:username>/' , userprofile , name='userprofile'),
+    path('userprofile/update/<str:username>/' , profile_update , name='userprofile-update'),
 ]

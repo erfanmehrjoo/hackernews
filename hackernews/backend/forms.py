@@ -1,6 +1,5 @@
-from dataclasses import field
 from django.forms import ModelForm
-from .models import Links , Message
+from .models import Links , Message , UserWithPhoto
 from django.contrib.auth.models import User
 class LinkForm(ModelForm):
     class Meta:
@@ -18,3 +17,8 @@ class MessagesForm(ModelForm):
         model = Message
         fields = "__all__"
     
+
+class UserWithPhotoForm(ModelForm):
+    class Meta:
+        model = UserWithPhoto
+        fields = "__all__"

@@ -1,9 +1,8 @@
-import re
 from django.shortcuts import render , redirect 
 from django.contrib.auth.forms import UserCreationForm , PasswordChangeForm
 from django.urls import reverse_lazy 
 from django.contrib.auth import login , authenticate , logout
-from .forms import LinkForm, MessagesForm , UserForm
+from .forms import LinkForm, MessagesForm , UserForm , UserWithPhotoForm 
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Links , UserWithPhoto , Message
@@ -120,7 +119,8 @@ def link_room(request , slug):
         form.save()
         return redirect('list')
     return render(request , 'roomlist.html' , context={'whoareyou':whoami,'rooms':room , 'messages':massages})
-    
+
+  
 @login_required(login_url='login')
 def userprofile(request , username):
     user = User.objects.get(username=username)
@@ -130,4 +130,18 @@ def userprofile(request , username):
     links = links.filter(Q(title__icontains=q))
     return render(request , 'userprofile.html' , context={'user':user , 'userph':userph , 'links':links})
 
+
+@login_required(login_url='login')
+def profile_update(request , username):
+    user = User.objects.get(username=username)
+    userph = UserWithPhoto.objects.get(user=user)
+    form = UserWithPhotoForm(instance=userph)
+    if request.method == "POST":
+        form = UserWithPhotoForm(request.POST , instance=userph)
+        if form.is_valid():
+            form.save()
+            return redirect('userprofile',username=username)
+    else:
+        form = UserWithPhotoForm(instance=userph)
+    return render(request , 'profileupdate.html' , context={'form':form})
 

@@ -94,12 +94,14 @@ def link_room(request , slug):
         body = request.POST.get('body')
         user = request.user
         link = room
+        userph = UserWithPhoto.objects.get(user=user)
         form = Message.objects.create(
             user = user,
             links = link,
+            userph = userph,
             body = body
         )
         
         form.save()
         return redirect('list')
-    return render(request , 'roomlist.html' , context={'whoareyou':whoami ,'rooms':room , 'messages':massages})
+    return render(request , 'roomlist.html' , context={'whoareyou':whoami,'rooms':room , 'messages':massages})

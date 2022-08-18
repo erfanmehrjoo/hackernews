@@ -39,6 +39,7 @@ class Links(models.Model):
 class Message(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE)
     links = models.ForeignKey(Links , on_delete=models.CASCADE)
+    userph = models.ForeignKey(UserWithPhoto , on_delete=models.CASCADE , blank=True , null=True )
     body = models.TextField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

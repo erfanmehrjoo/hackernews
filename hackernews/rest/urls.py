@@ -26,6 +26,6 @@ urlpatterns = [
     path('update/user/<str:pk>' , UserDetroy.as_view() , name='user-update'),
     path('user/<str:pk>' , RetriveUser.as_view() , name='user-single-list'),
     path('delete/user/<str:pk>/' , DeleteUser.as_view() , name='user-delete'),
-    path('/create/user/' , CreateUser.as_view() , name='user-create'),
+    path('create/user/' , CreateUser.as_view() , name='user-create'),
 ]
 

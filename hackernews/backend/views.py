@@ -88,6 +88,7 @@ def my_list(request):
 
 def link_room(request , slug):
     room = Links.objects.get(slug=slug)
+    whoami = UserWithPhoto.objects.get(user=request.user)
     massages = room.message_set.all()
     if request.method == "POST":
         body = request.POST.get('body')
@@ -101,4 +102,4 @@ def link_room(request , slug):
         
         form.save()
         return redirect('list')
-    return render(request , 'roomlist.html' , context={'rooms':room , 'messages':massages})
+    return render(request , 'roomlist.html' , context={'whoareyou':whoami ,'rooms':room , 'messages':massages})

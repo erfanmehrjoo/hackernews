@@ -3,7 +3,7 @@
 {% block content %}
   <div class="my-3 p-3 bg-body rounded shadow-sm">
     <div class="d-flex text-muted pt-3">
-        <img class="me-3" src="{% static user.image.url %}" alt="" width="48" height="48">
+        <img class="me-3" src="{% static rooms.userph.image.url %}" alt="" width="48" height="48">
 
         <p class="pb-3 mb-0 small lh-sm border-bottom">
           <strong class="d-block text-gray-dark">@{{ rooms.user }} || {{ rooms.created | timesince}}</strong>
@@ -22,7 +22,7 @@
                 <div class="card-body">
                   <div class="d-flex flex-start align-items-center">
                     <img class="rounded-circle shadow-1-strong me-3"
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
+                      src="{% static whoareyou.image.url %}" alt="avatar" width="60"
                       height="60" />
                     <div>
                       <h6 class="fw-bold text-primary mb-1">{{ request.user }}</h6>
@@ -42,7 +42,7 @@
                 <div class="card-footer py-3 border-0" style="background-color: #f8f9fa52;">
                   <div class="d-flex flex-start w-100">
                     <img class="rounded-circle shadow-1-strong me-3"
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+                      src="{% static whoareyou.image.url %}" alt="avatar" width="40"
                       height="40" />
                     <form action="" method="POST">
                         {% csrf_token %}

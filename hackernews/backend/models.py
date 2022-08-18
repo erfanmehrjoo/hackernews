@@ -12,6 +12,7 @@ class UserWithPhoto(models.Model):
 class Links(models.Model):
     title = models.CharField(max_length=100)
     url = models.URLField(max_length=200)
+    userph = models.ForeignKey(UserWithPhoto , on_delete=models.CASCADE , blank=True , null=True )
     votes = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE , null=True , blank=True)
     slug = models.SlugField(max_length=100, unique=True)

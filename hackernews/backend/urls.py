@@ -16,7 +16,7 @@ Including another URLconf
 from cmath import nan
 from django.contrib import admin
 from django.urls import path
-from .views import login_custom , logout_custom , register_custom , changepassword_custom , create_link , list_link , update_list , my_list
+from .views import login_custom , logout_custom , register_custom , changepassword_custom , create_link , list_link , update_list , my_list , link_room
 
 urlpatterns = [
     path('login/' , login_custom , name='login'),
@@ -27,4 +27,5 @@ urlpatterns = [
     path('list/' , list_link , name='list' ),
     path('update/<str:slug>' , update_list , name='update-list' ),
     path('my-list/' , my_list , name='my-list' ),
+    path('room/<str:slug>/' , link_room , name='link-room')
 ]

@@ -106,9 +106,9 @@
           </ul>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <form class="d-flex"  action="" method="GET">
+        <input type="text" class="form-control form-control-sm mr-2" placeholder="Search" name="q">
+        <input type="submit" class="btn btn-sm btn-outline-secondary" value="Search">
       </form>
     </div>
   </div>
@@ -133,26 +133,31 @@
 
 <main class="container">
   <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
-    <img class="me-3" src="../assets/brand/bootstrap-logo-white.svg" alt="" width="48" height="38">
+    <img class="me-3" src="https://getbootstrap.com/docs/5.2/assets/brand/bootstrap-logo-shadow.png" alt="" width="48" height="38">
     <div class="lh-1">
       <h1 class="h6 mb-0 text-white lh-1">Bootstrap</h1>
       <small>Since 2011</small>
     </div>
   </div>
+  <h6 class="border-bottom pb-2 mb-0">My Links</h6>
+
   {% for link in links %}
+  
+    
   <div class="my-3 p-3 bg-body rounded shadow-sm">
-    <h6 class="border-bottom pb-2 mb-0">My Links</h6>
     <div class="d-flex text-muted pt-3">
         <img class="me-3" src="{% static user.image.url %}" alt="" width="48" height="48">
 
-      <p class="pb-3 mb-0 small lh-sm border-bottom">
-        <strong class="d-block text-gray-dark">@{{ user.user }} || {{ link.created | timesince}}</strong>
-        <a href="{{ link.url}}">{{ link.title}}</a>
-        <p>{{ link.dis }}</p>
+        <p class="pb-3 mb-0 small lh-sm border-bottom">
+          <strong class="d-block text-gray-dark">@{{ user.user }} || {{ link.created | timesince}}</strong>
+          <a href="{{ link.url}}">{{ link.title}}</a>
+          <p>{{ link.dis }}</p>
         
-      </p>
+        </p>
+      </div>
     </div>
     {% endfor %}
+
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -7,6 +7,7 @@ from .forms import LinkForm , UserForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Links , UserWithPhoto , Message
+from django.db.models import Q
 # Create your views here.
 def login_custom(request):
     form = 'login'
@@ -23,7 +24,7 @@ def login_custom(request):
         user = authenticate(request , username=username , password=password)
         if user is not None:
             login(request , user)
-            return redirect("admin:index")
+            return redirect("list")
     return render(request , 'login.html' , context={form : "login"})
 
 def logout_custom(request):
@@ -40,7 +41,7 @@ def register_custom(request):
             user.username = user.username.lower()
             user.save()
             login(request , user)
-            return redirect('admin:index')
+            return redirect('lsit')
         else:
             messages.error(request , 'ridi')
     return render(request , 'register.html' , context={'form':form})
@@ -75,14 +76,18 @@ def create_link(request):
         form = LinkForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('admin:index')
+            return redirect('list')
     return render(request , "linkscreate.html" , context={"form" : form})
 
 def my_list(request):
     user = UserWithPhoto.objects.get(user=request.user)
     links = Links.objects.filter(user=request.user)
-
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    links = links.filter(Q(title__icontains=q))
     return render(request , 'mylinks.html' , context={'links' : links , 'user':user})
 
-def link_room(request):
-    pass
+def link_room(request , slug):
+    room = Links.objects.get(slug=slug)
+    massages = room.message_set.all()
+
+    return render(request , 'roomlist.html' , context={'rooms':room , 'messages':massages})

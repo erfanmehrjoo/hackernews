@@ -1,0 +1,6 @@
+{{rooms.title}}
+<hr/>
+{% for message in messages %}
+    {{ message.user }} || {{message.body}}
+    <hr/>
+{% endfor %}

@@ -4,7 +4,7 @@ from backend.models import Links , UserWithPhoto , Message
 class LinksSerializer(ModelSerializer):
     class Meta:
         model = Links
-        fields = '__all__'
+        fields = [ "title" , "url" , 'votes' , "user" , "created_date" , "created" , "updated"]
 
 class UserWithPhotoSerializer(ModelSerializer):
     class Meta:

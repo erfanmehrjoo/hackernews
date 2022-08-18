@@ -3,7 +3,7 @@ from django.shortcuts import render , redirect
 from django.contrib.auth.forms import UserCreationForm , PasswordChangeForm
 from django.urls import reverse_lazy 
 from django.contrib.auth import login , authenticate , logout
-from .forms import LinkForm , UserForm
+from .forms import LinkForm, MessagesForm , UserForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Links , UserWithPhoto , Message
@@ -89,5 +89,16 @@ def my_list(request):
 def link_room(request , slug):
     room = Links.objects.get(slug=slug)
     massages = room.message_set.all()
-
+    if request.method == "POST":
+        body = request.POST.get('body')
+        user = request.user
+        link = room
+        form = Message.objects.create(
+            user = user,
+            links = link,
+            body = body
+        )
+        
+        form.save()
+        return redirect('list')
     return render(request , 'roomlist.html' , context={'rooms':room , 'messages':massages})

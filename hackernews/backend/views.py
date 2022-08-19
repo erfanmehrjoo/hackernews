@@ -61,7 +61,7 @@ def changepassword_custom(request):
             form.save()
             return redirect('login')
     return render(request , 'changepassword.html' , context={"form" : form})
-
+@login_required(login_url='login')
 def list_link(request):
     user = UserWithPhoto.objects.get(user=request.user)
     links = Links.objects.all()

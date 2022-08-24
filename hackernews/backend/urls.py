@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from .views import login_custom , logout_custom , register_custom , changepassword_custom , create_link , list_link , update_list , my_list , link_room , userprofile  ,profile_update
+from .views import login_custom , logout_custom , register_custom , changepassword_custom , create_link , list_link , update_list , my_list , link_room , userprofile  ,profile_update , delete_room
 
 urlpatterns = [
     path('login/' , login_custom , name='login'),
@@ -25,8 +25,9 @@ urlpatterns = [
     path("changepassword/" , changepassword_custom , name='changepassword'),
     path('create/'  , create_link , name='create'), 
     path('list/' , list_link , name='list' ),
-    path('' , list_link , name='list' ),
+    path('' , list_link , name='home' ),
     path('update/<str:slug>' , update_list , name='update-list' ),
+    path('delete/<str:slug>' , delete_room , name='delete-list' ),
     path('my-list/' , my_list , name='my-list' ),
     path('room/<str:slug>/' , link_room , name='link-room'),
     path('userprofile/<str:username>/' , userprofile , name='userprofile'),

@@ -2,20 +2,21 @@
 {% load static %}
 {% block content %}
   {% for link in links %}
-  
-    
-  <div class="my-3 p-3 bg-body rounded shadow-sm">
-    <div class="d-flex text-muted pt-3">
-        <img class="me-3" src="{% static link.userph.image.url %}" alt="" width="48" height="48">
+  <div class="col-md-12">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        <a href="{% url 'userprofile' link.user %}"><strong class="d-inline-block mb-2 text-success">{{ link.user }}</strong></a>
+        <h3 class="mb-0">{{ link.title }}</h3>
+        <div class="mb-1 text-muted">{{ link.created | timesince }}</div>
+        <p class="mb-auto">{{ link.dis }}</p>
+        <a href="{% url 'update-list' link.slug %}" class="stretched-link">update</a> 
+      </div>
+      <div class="col-auto d-none d-lg-block">
+        <img class="img-fluid"  src="{% static link.userph.image.url %}" width="300" height="300">
 
-        <p class="pb-3 mb-0 small lh-sm border-bottom">
-          <strong class="d-block text-gray-dark">@{{ user.user }} || {{ link.created | timesince}}</strong>
-          <a href="{{ link.url}}">{{ link.title}}</a>
-          <p>{{ link.dis }}</p>
-        
-        </p>
       </div>
     </div>
+  </div>
     {% endfor %}
 
 {% endblock content %}

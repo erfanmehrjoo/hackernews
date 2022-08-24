@@ -24,6 +24,7 @@ class Links(models.Model):
     votes = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE , null=True , blank=True)
     slug = models.SlugField(max_length=100, unique=True , blank=True , null=True)
+    dis = models.TextField(max_length=200 , null=True , blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

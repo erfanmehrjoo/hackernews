@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render , redirect 
 from django.contrib.auth.forms import UserCreationForm , PasswordChangeForm
 from django.urls import reverse_lazy 
@@ -119,6 +120,14 @@ def link_room(request , slug):
         form.save()
         return redirect('list')
     return render(request , 'roomlist.html' , context={'whoareyou':whoami,'rooms':room , 'messages':massages})
+
+@login_required(login_url='login')
+def delete_room(request , slug):
+    link = Links.objects.get(slug=slug)
+    if request.method == 'POST':
+        link.delete()
+        return redirect('home')
+    return render(request , 'delete.html' , context = {})
 
   
 @login_required(login_url='login')

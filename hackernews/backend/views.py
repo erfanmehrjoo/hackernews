@@ -9,6 +9,7 @@ from django.contrib import messages
 from .models import Links , UserWithPhoto , Message
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 # Create your views here.
 def login_custom(request):
     form = 'login'
@@ -68,7 +69,11 @@ def list_link(request):
     links = Links.objects.all()
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     links = links.filter(Q(title__icontains=q))
-    return render(request , 'listlinks.html' , context={'links' : links , 'user':user})
+    paginator = Paginator(links, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request , 'listlinks.html' , context={'links' : links , 'user':user , 'page_obj': page_obj})
+
 @login_required(login_url='login')
 def update_list(request , slug):
     instance = Links.objects.get(slug=slug)
@@ -153,4 +158,12 @@ def profile_update(request , username):
     else:
         form = UserWithPhotoForm(instance=userph)
     return render(request , 'profileupdate.html' , context={'form':form})
+
+def error_404(request, exception):
+    return render(request, '404.html', status=404)
+
+def error_500(request):
+   context = {}
+   return render(request,'404.html', context)
+
 

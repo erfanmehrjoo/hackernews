@@ -1,15 +1,15 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-  {% for link in links %}
+  {% for link in page_obj %}
   <div class="col-md-12">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
       <div class="col p-4 d-flex flex-column position-static">
         <a href="{% url 'userprofile' link.user %}"><strong class="d-inline-block mb-2 text-success">{{ link.user }}</strong></a>
         <h3 class="mb-0">{{ link.title }}</h3>
+        <a href="{{ link.url }}">{{ link.title }}</a>
         <div class="mb-1 text-muted">{{ link.created | timesince }}</div>
         <p class="mb-auto">{{ link.dis }}</p>
-        <a href="{% url 'update-list' link.slug %}" class="stretched-link">update</a> 
       </div>
       <div class="col-auto d-none d-lg-block">
         <img class="img-fluid"  src="{% static link.userph.image.url %}" width="300" height="300">
@@ -18,5 +18,27 @@
     </div>
   </div>
     {% endfor %}
+  
 
 {% endblock content %}
+{% block paginator %}
+<div class="pagination">
+  <span class="step-links">
+      {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+  </span>
+</div>
+{% endblock paginator %}
+
+

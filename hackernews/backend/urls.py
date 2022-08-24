@@ -33,3 +33,5 @@ urlpatterns = [
     path('userprofile/<str:username>/' , userprofile , name='userprofile'),
     path('userprofile/update/<str:username>/' , profile_update , name='userprofile-update'),
 ]
+
+

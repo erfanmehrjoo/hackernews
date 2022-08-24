@@ -151,7 +151,7 @@
 </nav>
 <div class="container-fluid">
 <div class="row flex-nowrap">
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; height:max-content;">
   <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
     <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
     <span class="fs-4">Sidebar</span>
@@ -159,31 +159,38 @@
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
-      <a href="#" class="nav-link active" aria-current="page">
+      <a href="{% url 'list' %}" class="nav-link active" aria-current="page">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
         Home
       </a>
     </li>
     <li>
-      <a href="#" class="nav-link link-dark">
+      <a href="{% url 'create' %}" class="nav-link link-dark">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-        Dashboard
+        Create new link
       </a>
     </li>
     <li>
-      <a href="#" class="nav-link link-dark">
+      <a href="{% url 'my-list' %}" class="nav-link link-dark">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-        Orders
+        my link 
       </a>
     </li>
     <li>
-      <a href="#" class="nav-link link-dark">
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'logout' %}" class="nav-link link-dark">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-        Products
+        Logout
       </a>
+      {% else %}
+      <a href="{% url 'login' %}" class="nav-link link-dark">
+        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+        Login
+      </a>
+      {% endif %}
     </li>
     <li>
-      <a href="#" class="nav-link link-dark">
+      <a href="{% url 'userprofile' request.user %}" class="nav-link link-dark">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
         Customers
       </a>
@@ -191,17 +198,15 @@
   </ul>
   <hr>
   <div class="dropdown">
-    <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-      <strong>mdo</strong>
-    </a>
-    <ul class="dropdown-menu text-small shadow">
-      <li><a class="dropdown-item" href="#">New project...</a></li>
-      <li><a class="dropdown-item" href="#">Settings</a></li>
-      <li><a class="dropdown-item" href="#">Profile</a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="#">Sign out</a></li>
-    </ul>
+    <form action="" method="GET">
+    <div class="input-group">
+      <input type="search" class="form-control rounded" placeholder="Search" name="q" aria-label="Search" aria-describedby="search-addon" />
+      <input type="submit" value="search" class="btn btn-outline-primary">
+    </div>
+  </form>
+  </div>
+  <div class="fixed-bottom p-5">
+    <a href="https://erfanmehrjoo.ir"><img src="{% static 'images/images/whatsapp.png' %}" alt="whatsapp" style="width: 3%;"></a>
   </div>
 </div>
   <div class="col py-3">
@@ -218,8 +223,14 @@
 
 
 <main class="container p-3">
+  <div >
+    {% block paginator %}
 
 
+
+
+    {% endblock paginator %}
+  </div>
 
   </body>
 

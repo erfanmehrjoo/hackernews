@@ -14,18 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path , include
-from .views import ListDetroy , ListApi , Retrivelink , DeleteApi  , CreateApi , ListUser , UserDetroy , RetriveUser , DeleteUser , CreateUser
+from .views import LinksViewset , usersViewset , MessagesViewset
+from rest_framework import routers
+router = routers.SimpleRouter()
+router.register('users' , usersViewset , basename='users')
+router.register('links' , LinksViewset , basename='links')
+router.register('messages' , MessagesViewset , basename='messages')
 urlpatterns = [
-    path('' , include('rest_framework.urls')),
-    path('' , ListApi.as_view() , name='list_links'),
-    path('update/<str:slug>' , ListDetroy.as_view() , name='link-update'),
-    path('link/<str:slug>' , Retrivelink.as_view() , name='link-single-list'),
-    path('delete/<str:slug>/' , DeleteApi.as_view() , name='link-delete'),
-    path('create/' , CreateApi.as_view() , name='link-create'),
-    path('users/' , ListUser.as_view() , name='list_users'),
-    path('update/user/<str:pk>' , UserDetroy.as_view() , name='user-update'),
-    path('user/<str:pk>' , RetriveUser.as_view() , name='user-single-list'),
-    path('delete/user/<str:pk>/' , DeleteUser.as_view() , name='user-delete'),
-    path('create/user/' , CreateUser.as_view() , name='user-create'),
+    #path('' , include('rest_framework.urls')),
+    path('' , include(router.urls)),
+    path('rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+
 ]
 
